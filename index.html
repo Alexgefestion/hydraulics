@@ -97,7 +97,7 @@
 
 	let grid = 10;
 	//0-перемешение
-
+	let currLiquid = 0;	
 	let currTarget = 0;
 	let flagMode = 0
 
@@ -160,7 +160,7 @@
 			id: index,
 			Xcord: currViewX+(viewPortWidth/2),
 			Ycord: currViewY+(viewPortHeight/2),
-			liquid: Liquid[0]
+			liquid: Liquid[currLiquid]
 		});
 		Block[index].draw();
 	}
@@ -193,7 +193,7 @@
 		if(currScale <= 0.01){
 			currScale  = 0.01;
 		}
-		
+
 		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
 		scale.value = currScale;
 	}

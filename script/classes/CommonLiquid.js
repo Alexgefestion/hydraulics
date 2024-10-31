@@ -9,7 +9,7 @@ class CommonLiquid{
 	defaultOptions = {
 		name: 'Вода',
 		viscosity: 8.90e-4,
-		fill: '#aaa',
+		fill: '#36f',
 		draw: 997
 
 	}
