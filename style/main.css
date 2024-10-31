@@ -17,6 +17,9 @@
 		position: absolute;
 		margin-top: 96vh;
 	}
+	.ViewInfo > output{
+		width: 10vw;
+	}
 	.menu {
 		display: flex;
 		position: absolute;
@@ -59,7 +62,7 @@
 	.addBlock{
 		
 	}
-	.addBlock svg{
+	.addBlock > svg{
 		width: 5vw;
 		height: 5vw;
 	}
