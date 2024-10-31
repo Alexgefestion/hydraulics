@@ -193,18 +193,19 @@
 		if(currScale <= 0.01){
 			currScale  = 0.01;
 		}
+		
 		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
 		scale.value = currScale;
 	}
 	function viewPortX(xArg) {
 		currViewX+= xArg/currScale;
-		currViewX=Number((currViewX).toFixed(1));
+		currViewX=Math.round(currViewX);
 		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
 		Xout.value = currViewX;
 	}
 	function viewPortY(yArg) {
 		currViewY+= yArg/currScale;
-		currViewY=Number((currViewY).toFixed(1));
+		currViewY=Math.round(currViewY);
 		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
 		Yout.value = currViewY;
 	}
