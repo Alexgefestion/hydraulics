@@ -17,8 +17,9 @@
 		position: absolute;
 		margin-top: 96vh;
 	}
-	.ViewInfo > output{
-		width: 10vw;
+	.ViewInfo > div{
+		display: inline-block;
+		width: 5vw;
 	}
 	.menu {
 		display: flex;
