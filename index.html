@@ -109,13 +109,10 @@
 		viewPortWidth = document.querySelector(".workSpace").clientWidth;
 		viewPortHeight = document.querySelector(".workSpace").clientHeight;
 		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
-		// for(let i=0; i < 10; i++){
-		// 	Block[i] = new CommonBlock;
-		// }
 	}
 
 
-	init()
+	init();
 
 
 	function getXcoords(mouseCoords, scaleArg, currViewXArg){
