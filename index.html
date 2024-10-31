@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<link href="style/main.css" rel="stylesheet" />
+	<title>Document</title>
+</head>
+<script src="script/classes/CommonLiquid.js"></script>
+<script src="script/classes/CommonBlock.js"></script>
+<script src="script/classes/Nasos1.js"></script>
+<body>
+	<div class="ViewInfo">
+		<output id="scale" value="1">1.0</output>
+		<output id="Xout" value="0">0</output>
+		<output id="Yout" value="0">0</output>
+	</div>
+	<div class="workSpace">
+		<svg id="svg"
+			x="0px" y="0px"
+			xmlns="http://www.w3.org/2000/svg" 
+			viewBox="0 0 1000 1000"
+			xml:space="preserve">
+			<rect x="0" y="0" width="1920" height="1080" fill="#FFFFFF" fill-opacity="0.1" stroke-width="1" stroke="black"/>
+			<rect x="0" y="0" width="10" height="10" />
+			<rect x="0" y="1070" width="10" height="10" />
+			<rect x="1910" y="0" width="10" height="10" />
+			<rect x="1910" y="1070" width="10" height="10" />
+
+		</svg>
+	</div>
+	<div class="menu">
+
+		<div class="tools">
+			<div>
+				<svg onClick="setMode(0)" width="10" height="10" viewBox="0 0 100 100">
+					<polygon class="cls-1" points="20 93 20 4 85 69 48 68 20 93"/>
+				</svg>
+			</div>
+			<div>
+				<svg onClick="setMode(1)" width="10" height="10" viewBox="0 0 100 100">
+					<line class="cls-1" x1="50" y1="90" x2="50" y2="10"/>
+					<line class="cls-1" x1="10" y1="50" x2="90" y2="50"/>
+				</svg>
+			</div>
+			<div>
+				<svg onClick="setMode(2)" width="10" height="10" viewBox="0 0 100 100">
+					<polyline class="cls-1" points="18 20 18 85 82 85 82 20"/>
+					<path class="cls-1" d="M18,30.64s4.46,1.36,11,1.36,8.31-4,21-4,21.12,6.11,32,6"/>
+					<line class="cls-1" x1="25.03" y1="39.82" x2="39.5" y2="39.82"/>
+					<line class="cls-1" x1="52.13" y1="40.51" x2="69.35" y2="40.51"/>
+					<line class="cls-1" x1="32.26" y1="52.5" x2="56.14" y2="52.5"/>
+					<line class="cls-1" x1="54.08" y1="61.64" x2="75.09" y2="61.64"/>
+					<line class="cls-1" x1="52.93" y1="67.84" x2="35.48" y2="67.84"/>
+					<line class="cls-1" x1="35.48" y1="61.64" x2="24.11" y2="61.64"/>
+					<line class="cls-1" x1="57.06" y1="75.42" x2="73.48" y2="75.42"/>
+					<line class="cls-1" x1="42.37" y1="78.63" x2="26.75" y2="78.63"/>
+					<path class="cls-1" d="M58,7l-5,9s-1.66,5,5,5,5-5,5-5l-5-9Z"/>
+				</svg>
+			</div>
+			
+		</div>
+		<div class="addBlock">
+			<svg id="NasosTip1" onClick="createNasos()" viewBox="0 0 100 100">
+				<circle cx="50" cy="50" r="48" fill="none" stroke-width="1" stroke="black"/>
+				<path d="M50,2 l15,20 l-30,0 l-15,20" />
+			</svg>
+			<svg id="Junction" onClick="createNasos()" fill="none" stroke="#000" viewBox="0 0 100 100">
+				<circle class="cls-1" cx="50" cy="50" r="37.5"/>
+			</svg>
+			<svg id="Teploobmen1" onClick="createNasos()" fill="none" stroke="#000" viewBox="0 0 100 100">
+				<rect class="cls-1" x="10" y="10" width="80" height="80"/>
+				<polyline class="cls-2" points="50 2 50 25 60 40 40 60 50 75 50 98"/>
+				<line class="cls-3" x1="2" y1="70" x2="10" y2="70"/>
+				<line class="cls-3" x1="10" y1="30" x2="2" y2="30"/>
+			</svg>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+	let viewPortWidth = 1920;
+	let viewPortHeight = 1080;
+	let currScale = 1;
+	let currViewX = 0;
+	let currViewY = 0;
+
+	let grid = 10;
+	//0-перемешение
+
+	let currTarget = 0;
+	let flagMode = 0
+
+	let Liquid = [new CommonLiquid()];
+	let Block = new Array;
+
+
+	function init(){
+		viewPortWidth = document.querySelector(".workSpace").clientWidth;
+		viewPortHeight = document.querySelector(".workSpace").clientHeight;
+		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
+		// for(let i=0; i < 10; i++){
+		// 	Block[i] = new CommonBlock;
+		// }
+	}
+
+
+	init()
+
+
+	function getXcoords(mouseCoords, scaleArg, currViewXArg){
+		return (mouseCoords/scaleArg+currViewXArg).toFixed(1);
+	}
+	function getYcoords(mouseCoords, scaleArg, currViewYArg){
+		return (mouseCoords/scaleArg+currViewYArg).toFixed(1);
+	}
+
+
+	svg.addEventListener("mousewheel", function(e) {
+	    if (e.ctrlKey) {
+	       e.preventDefault();
+	       viewPortX(e.deltaY);
+	       return false;
+	    }
+	    if (e.altKey) {
+	       e.preventDefault();
+	       viewPortScale(-e.deltaY/1000);
+	       return false;
+	    }
+	    viewPortY(e.deltaY);
+
+	});
+
+	//выбрать инструмент перемещение, выбрать то что двигаем, двигать
+	svg.addEventListener('mousemove', function(e){
+		if((e.buttons == 1) && (flagMode == 0)){
+			let newX = (e.clientX/currScale)+currViewX;
+			let newY = (e.clientY/currScale)+currViewY;
+			newX=Math.round(newX/grid)*grid;
+			newY=Math.round(newY/grid)*grid;
+			Block[currTarget].move(newX, newY);
+		}
+	});
+
+
+
+	function createNasos(){
+		let index = Block.length;
+		Block[index] = new Nasos1({
+			id: index,
+			Xcord: currViewX+(viewPortWidth/2),
+			Ycord: currViewY+(viewPortHeight/2),
+			liquid: Liquid[0]
+		});
+		Block[index].draw();
+	}
+
+	function setMode(mode){
+		if (mode == 0){
+			svg.style.cursor = "url('./style/cur/pointer.png'), pointer";
+			flagMode = mode;
+			return;
+		}
+		if (mode == 1){
+			svg.style.cursor = "url('./style/cur/create.png'), pointer";
+			flagMode = mode;
+			return;
+		}
+		if (mode == 2){
+			svg.style.cursor = "url('./style/cur/liquid.png'), pointer";
+			flagMode = mode;
+			return;
+		}
+	}
+	function viewPortScale(scaleArg) {
+		if(currScale<=0.1){
+			currScale+= scaleArg/10;
+			currScale=Number((currScale).toFixed(2));
+		}else{
+			currScale+= scaleArg;
+			currScale=Number((currScale).toFixed(1));
+		}
+		if(currScale <= 0.01){
+			currScale  = 0.01;
+		}
+		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
+		scale.value = currScale;
+	}
+	function viewPortX(xArg) {
+		currViewX+= xArg/currScale;
+		currViewX=Number((currViewX).toFixed(1));
+		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
+		Xout.value = currViewX;
+	}
+	function viewPortY(yArg) {
+		currViewY+= yArg/currScale;
+		currViewY=Number((currViewY).toFixed(1));
+		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
+		Yout.value = currViewY;
+	}
+</script>
