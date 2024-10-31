@@ -31,11 +31,11 @@
 			xmlns="http://www.w3.org/2000/svg" 
 			viewBox="0 0 1000 1000"
 			xml:space="preserve">
-			<rect x="0" y="0" width="1920" height="1080" fill="#FFFFFF" fill-opacity="0.1" stroke-width="1" stroke="black"/>
-			<rect x="0" y="0" width="10" height="10" />
+			<rect id="view" x="0" y="0" width="1920" height="1080" fill="#FFFFFF" fill-opacity="0.1" stroke-width="1" stroke="black"/>
+<!-- 			<rect x="0" y="0" width="10" height="10" />
 			<rect x="0" y="1070" width="10" height="10" />
 			<rect x="1910" y="0" width="10" height="10" />
-			<rect x="1910" y="1070" width="10" height="10" />
+			<rect x="1910" y="1070" width="10" height="10" /> -->
 
 		</svg>
 	</div>
@@ -138,9 +138,19 @@
 
 	});
 
+	svg.addEventListener("click", function(e){
+		let targetId = e.target.getAttribute("id");
+		if(targetId == 'view'){
+			currTarget = -1;
+			console.log(currTarget);
+		}
+	});
+
 	//выбрать инструмент перемещение, выбрать то что двигаем, двигать
 	svg.addEventListener('mousemove', function(e){
-		if((e.buttons == 1) && (flagMode == 0)){
+		let targetId = e.target.getAttribute("id");
+		console.log(targetId)
+		if((e.buttons == 1) && (flagMode == 0) && (targetId == `block${currTarget}`)){
 			let newX = (e.clientX/currScale)+currViewX;
 			let newY = (e.clientY/currScale)+currViewY;
 			newX=Math.round(newX/grid)*grid;
