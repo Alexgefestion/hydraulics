@@ -10,7 +10,7 @@ class CommonLiquid{
 		name: 'Вода',
 		viscosity: 8.90e-4,
 		fill: '#36f',
-		draw: 997
+		density: 997
 
 	}
 }
