@@ -42,18 +42,18 @@
 	<div class="menu">
 
 		<div class="tools">
-			<div>
+			<div id="tool0">
 				<svg onClick="setMode(0)" width="10" height="10" viewBox="0 0 100 100">
 					<polygon class="cls-1" points="20 93 20 4 85 69 48 68 20 93"/>
 				</svg>
 			</div>
-			<div>
+			<div id="tool1">
 				<svg onClick="setMode(1)" width="10" height="10" viewBox="0 0 100 100">
 					<line class="cls-1" x1="50" y1="90" x2="50" y2="10"/>
 					<line class="cls-1" x1="10" y1="50" x2="90" y2="50"/>
 				</svg>
 			</div>
-			<div>
+			<div id="tool2">
 				<svg onClick="setMode(2)" width="10" height="10" viewBox="0 0 100 100">
 					<polyline class="cls-1" points="18 20 18 85 82 85 82 20"/>
 					<path class="cls-1" d="M18,30.64s4.46,1.36,11,1.36,8.31-4,21-4,21.12,6.11,32,6"/>
@@ -135,7 +135,6 @@
 	       return false;
 	    }
 	    viewPortY(e.deltaY);
-
 	});
 
 	svg.addEventListener("click", function(e){
@@ -149,14 +148,16 @@
 	//выбрать инструмент перемещение, выбрать то что двигаем, двигать
 	svg.addEventListener('mousemove', function(e){
 		let targetId = e.target.getAttribute("id");
-		console.log(targetId)
-		if((e.buttons == 1) && (flagMode == 0) && (targetId == `block${currTarget}`)){
-			let newX = (e.clientX/currScale)+currViewX;
-			let newY = (e.clientY/currScale)+currViewY;
-			newX=Math.round(newX/grid)*grid;
-			newY=Math.round(newY/grid)*grid;
-			Block[currTarget].move(newX, newY);
+		if(flagMode == 0){
+			if((e.buttons == 1) && (targetId == `block${currTarget}`)){
+				let newX = (e.clientX/currScale)+currViewX;
+				let newY = (e.clientY/currScale)+currViewY;
+				newX=Math.round(newX/grid)*grid;
+				newY=Math.round(newY/grid)*grid;
+				Block[currTarget].move(newX, newY);
+			}
 		}
+
 	});
 
 
