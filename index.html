@@ -13,15 +13,12 @@
 <body>
 	<div class="ViewInfo">
 		<div>
-			scale:
-			<output id="scale" value="1">1.0</output>
+			<output id="scale" value="1">100%</output>
 		</div>
 		<div>
-			x:
 			<output id="Xout" value="0">0</output>
 		</div>
 		<div>
-			y:
 			<output id="Yout" value="0">0</output>
 		</div>
 	</div>
@@ -32,11 +29,6 @@
 			viewBox="0 0 1000 1000"
 			xml:space="preserve">
 			<rect id="view" x="0" y="0" width="1920" height="1080" fill="#FFFFFF" fill-opacity="0.1" stroke-width="1" stroke="black"/>
-<!-- 			<rect x="0" y="0" width="10" height="10" />
-			<rect x="0" y="1070" width="10" height="10" />
-			<rect x="1910" y="0" width="10" height="10" />
-			<rect x="1910" y="1070" width="10" height="10" /> -->
-
 		</svg>
 	</div>
 	<div class="menu">
@@ -93,7 +85,7 @@
 	let currTarget = 0;
 	let flagMode = 0
 
-	let Liquid = [new CommonLiquid()];
+	let Liquid = [new CommonLiquid({id:0})];
 	let Block = new Array;
 
 
@@ -195,7 +187,7 @@
 		}
 
 		svg.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
-		scale.value = currScale;
+		scale.value = currScale*100+'%';
 	}
 	function viewPortX(xArg) {
 		currViewX+= xArg/currScale;

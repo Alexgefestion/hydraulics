@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<script src="script/classes/CommonLiquid.js"></script>
+<script src="script/classes/CommonBlock.js"></script>
+<script src="script/classes/Nasos1.js"></script>
+<style>
+* {
+	box-sizing: border-box;
+	padding: 0px;
+	margin: 0px;
+}
+body {
+	background-color: #3c4e60;
+}
+.main {
+	display: flex;
+	height: 100vh;
+}
+	.view {
+		flex-basis: 80%;
+		background-color: #f1948a;
+
+		display: flex;
+		flex-direction: column;
+	}
+		.viewPort {
+			flex-grow: 1;
+			background-color: #c39bd3;
+		}
+			.viewPort > svg {
+				height: 100%;
+				width: 100%;
+			}
+		.viewInfo {
+			flex-basis: 30px;
+			background-color: #2c3e50;
+			color: #dadada;
+			display: flex;
+		}
+			.scaleInfo {
+				flex-basis: 15%;
+			}
+			.xInfo {
+				flex-basis: 10%;
+			}
+			.yInfo {
+				flex-basis: 10%;
+			}
+			.currTargetInfo {
+				flex-basis: 25%;
+			}
+			.toolInfo {
+				flex-basis: 45%;
+			}
+	.menu {
+		flex-basis: 20%;
+		background-color: #2c3e50 ;
+		height: 100vh;
+		display: flex;
+	}
+		.tools {
+			flex-basis: 10%;
+
+
+			display: flex;
+			flex-direction: column;
+		}
+			.tool {
+				margin-top: 1vh;
+				flex-basis: 5vh;
+				transition-duration: 0.5s;
+			}
+			.tool:hover {
+				cursor:pointer;
+				background-color: #1c2e40;
+			}
+			.tool > svg {
+				width: 100%;
+				height: 100%;
+				fill: none;
+			    stroke: #dadada;
+			    stroke-miterlimit: 10;
+			    stroke-width: 4px;
+			}
+		.toolOption {
+			margin-left: 1vh;
+			overflow: hidden;
+			color: #dadada;
+			flex-basis: 90%;
+		}
+			.blockOption {
+				display: flex;
+				flex-wrap: wrap;
+			}
+				.blockOption > input{
+					background-color: #1c2e40;
+					color: #dadada;
+					background-clip: padding-box;
+					border: 1px solid #bdbdbd;
+					border-radius: 0.25rem;
+					line-height: 1.5;
+				}
+			.addBlock {
+				transition-duration: 0.2s;
+				display: none;
+				flex-wrap: wrap;
+			}
+			.addBlock > div {
+				flex-basis: 33.33%;
+
+			}
+
+			.liquidOption {
+				display: none;
+				flex-wrap: wrap;
+			}
+
+</style>
+<body>
+	<div class="main">
+		<div class="view">
+			<div class="viewPort">
+				<svg id="workSpace"
+					x="0px" y="0px"
+					xmlns="http://www.w3.org/2000/svg" 
+					viewBox="0 0 1000 1000"
+					xml:space="preserve">
+					<rect id="view" x="0" y="0" width="1920" height="1080" fill="#5c6e80" stroke-width="1" stroke="black"/>
+				</svg>
+			</div>
+			<div class="viewInfo">
+				<div class="scaleInfo">
+					<output id="scaleOut" value="1">100%</output>
+				</div>
+				<div class="xInfo">
+					<output id="xOut" value="0">0</output>
+				</div>
+				<div class="yInfo">
+					<output id="yOut" value="0">0</output>
+				</div>
+				<div class="currTargetInfo">
+					<output id="currTargetOut">Рабочее поле</output>
+				</div>
+				<div  class="toolInfo">
+					<output id="toolOut">Свойства блока</output>
+				</div>
+			</div>
+		</div>
+		<div  class="menu">
+			<div class="tools">
+				<div class="tool">
+					<svg onClick="setMode(0)" width="10" height="10" viewBox="0 0 100 100">
+						<polygon points="20 93 20 4 85 69 48 68 20 93"/>
+					</svg>
+				</div>
+				<div class="tool">
+					<svg onClick="setMode(1)" width="10" height="10" viewBox="0 0 100 100">
+						<line x1="50" y1="90" x2="50" y2="10"/>
+						<line x1="10" y1="50" x2="90" y2="50"/>
+					</svg>
+				</div>
+				<div class="tool">
+					<svg onClick="setMode(2)" width="10" height="10" viewBox="0 0 100 100">
+						<path fill="#3f6fff" d="M75.5,65.2l-9.5,17.2s-3.2,9.5,9.5,9.5c12.7,0,9.5-9.5,9.5-9.5l-9.5-17.2Z"/>
+						<path fill="#3f6fff" d="M19.9,43.3c-1.4,1.4-2.3,3.4-2.3,5.7s.9,4.2,2.3,5.7l20,20.2c1.4,1.4,3.4,2.3,5.7,2.3,2.2,0,4.2-.9,5.7-2.3l31.3-31.3s-6-6-18.6,0-16.3,2.7-22.9,0-21.1-.2-21.1-.2Z"/>
+						<path fill="none" d="M51.1,12.1l-31.2,31.2c-1.4,1.4-2.3,3.4-2.3,5.7s.9,4.2,2.3,5.7l20,20.2c1.4,1.4,3.4,2.3,5.7,2.3,2.2,0,4.2-.9,5.7-2.3l31.3-31.3L47.2,8.2c-1.4-1.4-3.4-2.3-5.7-2.3s-4.2.9-5.7,2.3l-5.9,5.9"/>
+					</svg>
+				</div>
+			</div>
+			<div id="toolOption" class="toolOption">
+				<div id="blockOption" class="blockOption">
+				</div>
+				<div id="addBlock" class="addBlock">
+				</div>
+				<div id="liquidOption" class="liquidOption">
+					<p>Название</p>
+					<input type="text">
+					<p>Вязкоть</p>
+					<input type="number">
+					<p>Плотность</p>
+					<input type="number">
+					<p>Цвет</p>
+					<input type="color" oninput="changeLiquidOption(this.value)">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
+<script>
+
+	function getBlockOption(option){
+		blockOption.innerHTML = "";
+		for (let i = 0; i < option.length; i++) {
+			blockOption.innerHTML += `
+			<div>	
+				<p>${option[i][0]}</p>
+				<input type="${option[i][2]}" value="${option[i][1]}">
+			</div>`
+		}
+	}
+
+
+
+	let viewPortWidth = 1920;
+	let viewPortHeight = 1080;
+	let currScale = 1;
+	let currViewX = 0;
+	let currViewY = 0;
+
+	let grid = 10;
+	//0-перемешение
+	let currLiquid = 0;	
+	let currTarget = 0;
+	let flagMode = 0
+
+	let Liquid = [new CommonLiquid()];
+	let Block = [];
+
+
+	//       @@@@@@@@    @@@     @@    @@@@@@@@    @@@@@@@@ 
+	//          @@       @@@@    @@       @@          @@
+	//          @@       @@ @@   @@       @@          @@
+	//          @@       @@  @@  @@       @@          @@
+	//          @@       @@   @@ @@       @@          @@
+	//          @@       @@    @@@@       @@          @@
+	//       @@@@@@@@    @@     @@@    @@@@@@@@       @@
+
+
+	function init(){
+		for (key in blockClasses) {
+			addBlock.innerHTML += `
+			<div>
+				${key}
+				${blockClasses[key].getMiniIcon()}
+			</div>`
+		}
+		viewPortWidth = document.querySelector(".viewPort").clientWidth;
+		viewPortHeight = document.querySelector("body").clientHeight-30;
+		workSpace.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
+	}
+
+
+	//         @@@@@    @@@@@@      @@@@@@@@       @@       @@@@@@@@    @@@@@@@@
+	//        @@        @@   @@     @@            @@@@         @@       @@
+	//       @@         @@    @@    @@           @@  @@        @@       @@
+	//       @@         @@   @@     @@@@@@       @@  @@        @@       @@@@@@
+	//       @@         @@@@@       @@          @@@@@@@@       @@       @@
+	//        @@        @@  @@      @@          @@    @@       @@       @@
+	//         @@@@@    @@   @@     @@@@@@@@    @@    @@       @@       @@@@@@@@
+	let blockClasses = {
+		"Nasos1": Nasos1,
+		"Nasos2": Nasos1
+	}
+	function createBlock(className){
+		let index = Block.length;
+		Block[index] = new blockClasses[className]({
+			id: index,
+			Xcord: currViewX+(viewPortWidth/2),
+			Ycord: currViewY+(viewPortHeight/2),
+			liquid: Liquid[currLiquid]
+		});
+		workSpace.innerHTML += Block[index].getIcon();
+	}
+  
+	//       @@@@@@@@    @@    @@    @@@@@@@@    @@@     @@    @@@@@@@@
+	//       @@          @@    @@    @@          @@@@    @@       @@
+	//       @@          @@    @@    @@          @@ @@   @@       @@
+	//       @@@@@@       @@  @@     @@@@@@      @@  @@  @@       @@
+	//		 @@           @@  @@     @@          @@   @@ @@       @@
+	//       @@            @@@@      @@          @@    @@@@       @@
+	//		 @@@@@@@@       @@       @@@@@@@@    @@     @@@       @@
+
+
+	//key
+	//mouse
+	let leftMouseKey = 0;
+	document.addEventListener("mousedown", function(e) {
+		let targetId = e.target.getAttribute("id");
+		if(targetId == 'view'){
+			setCurrTarget(-1);
+			setMode(1);
+		}else{
+			// getBlockOption(Block[currTarget].getOption());
+		}
+
+		if(e.button == 0){
+			leftMouseKey = 1;
+		} 
+	});
+	document.addEventListener("mouseup", function(e) {
+		if(e.button == 0){
+			leftMouseKey = 0;
+		}
+
+	});
+
+
+	toolOption.addEventListener("mousewheel", function(e) {
+		let element = document.querySelector(".addBlock");
+		let curr = element.offsetTop-e.deltaY;
+		if(curr < 1){
+			element.style.marginTop = `${curr}px`;
+		}
+
+	});
+
+	workSpace.addEventListener("mousewheel", function(e) {
+	    if (e.ctrlKey) {
+	       e.preventDefault();
+	       viewPortX(e.deltaY);
+	       return false;
+	    }
+	    if (e.altKey) {
+	       e.preventDefault();
+	       viewPortScale(-e.deltaY/1000);
+	       return false;
+	    }
+	    viewPortY(e.deltaY);
+	});
+	workSpace.addEventListener('mousemove', function(e){
+		if(flagMode == 0){
+			if(leftMouseKey == 1){
+
+				let newX = (e.clientX/currScale)+currViewX;
+				let newY = (e.clientY/currScale)+currViewY;
+				newX=Math.round(newX/grid)*grid;
+				newY=Math.round(newY/grid)*grid;
+				Block[currTarget].move(newX, newY);
+			}
+		}
+	});
+	workSpace.addEventListener("click", function(e){
+		
+	});
+	function changeLiquidOption(color){
+		Liquid[currLiquid].fill = color;
+		Block.forEach((item) => {
+			item.reDraw();
+		});
+	}
+	function setMode(mode){
+		if (mode == 0){
+			workSpace.style.cursor = "url('./style/cur/pointer.png'), pointer";
+			flagMode = mode;
+			blockOption.style.display = "flex";
+			addBlock.style.display = "none";
+			liquidOption.style.display = "none";
+			toolOut.innerHTML = "Свойства блока";
+			return;
+		}
+		if (mode == 1){
+			workSpace.style.cursor = "url('./style/cur/create.png'), pointer";
+			flagMode = mode;
+			blockOption.style.display = "none";
+			addBlock.style.display = "flex";
+			liquidOption.style.display = "none";
+			toolOut.innerHTML = "Создание блока";
+			return;
+		}
+		if (mode == 2){
+			workSpace.style.cursor = "url('./style/cur/liquid.png'), pointer";
+			flagMode = mode;
+			blockOption.style.display = "none";
+			addBlock.style.display = "none";
+			liquidOption.style.display = "flex";
+			toolOut.innerHTML = "Свойства жидкости";
+			return;
+		}
+	}
+	function setCurrTarget(newid){
+		currTarget = newid;
+		if (newid != -1){
+			currTargetOut.innerHTML = Block[newid].name;
+		}else{
+			currTargetOut.innerHTML = "Рабочее поле";
+		}	
+
+	}
+	function viewPortScale(scaleArg) {
+		if(currScale<=0.1){
+			currScale+= scaleArg/10;
+			currScale=Number((currScale).toFixed(2));
+		}else{
+			currScale+= scaleArg;
+			currScale=Number((currScale).toFixed(1));
+		}
+		if(currScale <= 0.01){
+			currScale  = 0.01;
+		}
+
+		workSpace.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
+		scaleOut.value = currScale*100+'%';
+	}
+
+	function viewPortX(xArg) {
+		currViewX+= xArg/currScale;
+		currViewX=Math.round(currViewX);
+		workSpace.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
+		xOut.value = currViewX;
+	}
+
+	function viewPortY(yArg) {
+		currViewY+= yArg/currScale;
+		currViewY=Math.round(currViewY);
+		workSpace.setAttribute("viewBox", `${currViewX} ${currViewY } ${viewPortWidth/currScale} ${viewPortHeight/currScale}`);
+		yOut.value = currViewY;
+	}
+
+	init();
+</script>

@@ -1,7 +1,17 @@
 class Nasos1 extends CommonBlock{
-	icon = 
-	`<svg id="block${this.id}" width="${this.width}" fill="${this.liquid.fill}" onmousedown="currTarget=${this.id}" x="${this.Xcord}" y="${this.Ycord}" stroke-width="2" stroke="black" width="100" height="100" viewBox="0 0 100 100">
+	name = "Насос"
+	getIcon(){
+		return `
+	<svg id="block${this.id}" width="${this.width}" onmousedown="setCurrTarget(${this.id});setMode(0)" x="${this.Xcord}" y="${this.Ycord}" fill="${this.liquid.fill}"  stroke-width="2" stroke="black" width="100" height="100" viewBox="0 0 100 100">
 		<circle id="block${this.id}" cx="50" cy="50" r="48"/>
 		<path fill="#000" d="M50,2 l15,20 l-30,0 l15,-20"/>
 	</svg> `
+	}
+	static miniIcon = 
+	`
+	<svg id="Nasos1" onClick="createBlock('Nasos1')" viewBox="0 0 100 100">
+		<circle cx="50" cy="50" r="48" fill="none" stroke-width="1" stroke="#dadaff"/>
+		<path d="M50,2 l15,20 l-30,0 l-15,20 "  fill="#dadaff"/>
+	</svg>
+	`
 }
