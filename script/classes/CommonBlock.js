@@ -18,7 +18,7 @@ class CommonBlock{
 			id: 0,
 			name: 'Вода',
 			viscosity: 8.90e-4,
-			fill: '#36f',
+			fill: '#adf',
 			density: 997
 		},
 		pressure: 1,
