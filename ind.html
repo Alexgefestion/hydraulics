@@ -119,7 +119,10 @@ body {
 				display: none;
 				flex-wrap: wrap;
 			}
-
+	.node:hover {
+		cursor: pointer;
+		fill: #fff;
+	}
 </style>
 <body>
 	<div class="main">
@@ -215,10 +218,29 @@ body {
 	let currViewY = 0;
 
 	let grid = 10;
-	//0-перемешение
+
 	let currLiquid = 0;	
 	let currTarget = 0;
+
 	let flagMode = 0
+//перемнные режимов
+	//0
+	//1
+	//2
+	//3-устновка соединений
+	let startNode = [0,0];
+	let endNode = [0,1];
+	let startCords = [0,0];
+	let endCords = [0,0];
+	pipes=[
+	{
+	Xcord: 50,
+	Ycord: 98,
+	connect: [[0,0],[0,1]]
+	}
+	]
+
+
 
 	let Liquid = [new CommonLiquid()];
 	let Block = [];
@@ -268,6 +290,33 @@ body {
 		});
 		workSpace.innerHTML += Block[index].getIcon();
 	}
+
+
+
+
+	function pipe(node, cords){
+		let currPipe = pipes.length;
+		endNode = startNode;
+		startNode = node;
+		endCords = startCords;
+		startCords = [cords[0]+Block[startNode[0]].Xcord,cords[1]+Block[startNode[0]].Ycord];
+		pipes[currPipe]=
+			{
+				startCords: startCords,
+				endCords: endCords,
+				connect: [startNode,endNode]
+			}
+		console.log(pipes[currPipe]["startCords"])
+		workSpace.innerHTML += `
+			<line 
+			x1="${pipes[currPipe]["startCords"][0]}" 
+			y1="${pipes[currPipe]["startCords"][1]}" 
+			x2="${pipes[currPipe]["endCords"][0]}" 
+			y2="${pipes[currPipe]["endCords"][1]}" 
+			stroke="black" />
+		`
+		
+	}
   
 	//       @@@@@@@@    @@    @@    @@@@@@@@    @@@     @@    @@@@@@@@
 	//       @@          @@    @@    @@          @@@@    @@       @@
@@ -283,16 +332,19 @@ body {
 	let leftMouseKey = 0;
 	document.addEventListener("mousedown", function(e) {
 		let targetId = e.target.getAttribute("id");
-		if(targetId == 'view'){
-			setCurrTarget(-1);
-			setMode(1);
-		}else{
-			// getBlockOption(Block[currTarget].getOption());
-		}
+		if(targetId != null){
+			if(targetId == 'view'){
+				setCurrTarget(-1);
+				setMode(1);
+			}else if(targetId.startsWith("block")) {
+				setCurrTarget(targetId.split("block")[1]);
+				getBlockOption(Block[currTarget].getOption());
+			}
 
-		if(e.button == 0){
-			leftMouseKey = 1;
-		} 
+			if(e.button == 0){
+				leftMouseKey = 1;
+			} 
+		}
 	});
 	document.addEventListener("mouseup", function(e) {
 		if(e.button == 0){

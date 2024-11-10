@@ -28,6 +28,17 @@ class CommonBlock{
 
 	width = 100;
 	miniIcon = "";
+
+	static getMiniIcon(){
+		return this.miniIcon;
+	}
+	getIcon(){
+		return `
+		<svg id="block${this.id}" width="${this.width}" onmousedown="setCurrTarget(${this.id});setMode(0)" x="${this.Xcord}" y="${this.Ycord}" fill="${this.liquid.fill}"  stroke-width="2" stroke="black" width="100" height="100" viewBox="0 0 100 100">
+			<circle id="block${this.id}" cx="50" cy="50" r="48"/>
+		</svg> `
+	}
+
 	getOption(){
 		let option = [
 			["id блока", this.id, "number"],
@@ -38,29 +49,25 @@ class CommonBlock{
 		]
 		return option;
 	}
-	static getMiniIcon(){
-		return this.miniIcon;
-	}
-	getIcon(){
-		return `
-	<svg id="block${this.id}" width="${this.width}" onmousedown="setCurrTarget(${this.id});setMode(0)" x="${this.Xcord}" y="${this.Ycord}" fill="${this.liquid.fill}"  stroke-width="2" stroke="black" width="100" height="100" viewBox="0 0 100 100">
-		<circle id="block${this.id}" cx="50" cy="50" r="48"/>
-	</svg> `
-	}
+
 	draw(){
 		workSpace.innerHTML += this.getIcon();
 	}
+
 	remove(){
 		workSpace.getElementById(`block${this.id}`).remove();
 	}
+
 	reDraw(){
 		this.remove();
 		this.draw();
 	}
+
 	changeFill(fillArg){
 		this.liquid.fill = fillArg;
 		workSpace.getElementById(`block${this.id}`).setAttribute("fill", this.liquid.fill);
 	}
+
 	move(newX,newY){
 		this.Xcord = newX-(this.width/2);
 		workSpace.getElementById(`block${this.id}`).setAttribute("x", this.Xcord);
