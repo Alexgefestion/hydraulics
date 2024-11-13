@@ -13,9 +13,16 @@
 <li>0 - линия, координаты начала которой: x1=x, y1=y; координаты конца линии x2=cord1, y2=cord2;</li>
 <li>1 - эллипс, с центром в координатах cx=x, cy=y; радиусы дуг rx=cord1, ry=cord2;</li>
 
+	icon = [
+		[1,0,0,48,48],
+		[0,0,-48,15,-25],
+		[0,0,-48,-15,-25]
+	];
 
-<svg width="100" height="100">
-	<ellipse cx="50" cy="50" rx="48" ry="48" stroke="black" fill="#adf"></ellipse>
-	<line x1="50" y1="2" x2="35" y2="25" stroke="black"></line>
-	<line x1="50" y1="2" x2="65" y2="25" stroke="black"></line>
-</svg>
+<h4>Прeобразуется в:</h4>
+ 
+	<svg width="100" height="100">
+		<ellipse cx="50" cy="50" rx="48" ry="48" stroke="black" fill="#adf"></ellipse>
+		<line x1="50" y1="2" x2="35" y2="25" stroke="black"></line>
+		<line x1="50" y1="2" x2="65" y2="25" stroke="black"></line>
+	</svg>
