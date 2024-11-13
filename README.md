@@ -22,6 +22,6 @@
 
 <h4>Прeобразуется в:</h4>
  
-	<ellipse cx="50" cy="50" rx="48" ry="48" stroke="black" fill="#adf"></ellipse>
-	<line x1="50" y1="2" x2="35" y2="25" stroke="black"></line>
-	<line x1="50" y1="2" x2="65" y2="25" stroke="black"></line>
+	<ellipse cx="50" cy="50" rx="48" ry="48"></ellipse>
+	<line x1="50" y1="2" x2="35" y2="25"></line>
+	<line x1="50" y1="2" x2="65" y2="25"></line>
