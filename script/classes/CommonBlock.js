@@ -107,7 +107,7 @@ class CommonBlock{
 		// </svg> `
 	}
 	getIcon(){
-		return this.iconProcessor(this.iconMarginPrcessor(this.iconRotatePrcessor(this.icon, 1)));
+		return this.iconProcessor(this.iconMarginPrcessor(this.iconRotatePrcessor(this.icon, 0)));
 	}
 
 	getOption(){
