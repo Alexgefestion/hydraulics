@@ -26,13 +26,14 @@ class CommonBlock{
 	}
 	//graphic 
 
-	width = 100;
+	
 	miniIcon = "";
 	icon = [
 		[1,0,0,48,48],
 		[0,0,-48,15,-25],
 		[0,0,-48,-15,-25]
 	];
+	scale = 1;
 
 	static getMiniIcon(){
 		return this.miniIcon;
@@ -78,14 +79,14 @@ class CommonBlock{
 		for(let i = 0; i < iconObjet.length; i++){
 			newIcon[i] = [];
 			newIcon[i][0] = iconObjet[i][0];
-			newIcon[i][1] = iconObjet[i][1]+this.Xcord;
-			newIcon[i][2] = iconObjet[i][2]+this.Ycord;
+			newIcon[i][1] = iconObjet[i][1]*this.scale+this.Xcord;
+			newIcon[i][2] = iconObjet[i][2]*this.scale+this.Ycord;
 			if(iconObjet[i][0] == 0){
-				newIcon[i][3] = iconObjet[i][3]+this.Xcord;
-				newIcon[i][4] = iconObjet[i][4]+this.Ycord;			
+				newIcon[i][3] = iconObjet[i][3]*this.scale+this.Xcord;
+				newIcon[i][4] = iconObjet[i][4]*this.scale+this.Ycord;			
 			}else{
-				newIcon[i][3] = iconObjet[i][3];
-				newIcon[i][4] = iconObjet[i][4];
+				newIcon[i][3] = iconObjet[i][3]*this.scale;
+				newIcon[i][4] = iconObjet[i][4]*this.scale;
 			}
 		}
 		return newIcon;
@@ -96,15 +97,10 @@ class CommonBlock{
 			if(iconObjet[i][0] == 0){
 				newIcon += `<line x1="${iconObjet[i][1]}" y1="${iconObjet[i][2]}" x2="${iconObjet[i][3]}" y2="${iconObjet[i][4]}" />`		
 			}else{
-				newIcon += `<ellipse cx="${iconObjet[i][1]}" cy="${iconObjet[i][2]}" rx="${iconObjet[i][3]}" ry="${iconObjet[i][4]}" />`;
+				newIcon += `<ellipse id="block${this.id}" cx="${iconObjet[i][1]}" cy="${iconObjet[i][2]}" rx="${iconObjet[i][3]}" ry="${iconObjet[i][4]}" />`;
 			}
 		}
-		console.log(newIcon)
 		return newIcon;
-		// return `
-		// <svg id="block${this.id}" width="${this.width}" onmousedown="setCurrTarget(${this.id});setMode(0)" x="${this.Xcord}" y="${this.Ycord}" fill="${this.liquid.fill}"  stroke-width="2" stroke="black" width="100" height="100" viewBox="0 0 100 100">
-		// 	<circle id="block${this.id}" cx="50" cy="50" r="48"/>
-		// </svg> `
 	}
 	getIcon(){
 		return this.iconProcessor(this.iconMarginPrcessor(this.iconRotatePrcessor(this.icon, 0)));
@@ -140,9 +136,10 @@ class CommonBlock{
 	}
 
 	move(newX,newY){
-		this.Xcord = newX-(this.width/2);
-		workSpace.getElementById(`block${this.id}`).setAttribute("x", this.Xcord);
-		this.Ycord = newY-(this.width/2);
-		workSpace.getElementById(`block${this.id}`).setAttribute("y", this.Ycord);
+		this.Xcord = newX;
+		workSpace.getElementById(`block${this.id}`).remove();
+		this.Ycord = newY;
+		workSpace.innerHTML += this.getIcon();
+		// workSpace.getElementById(`block${this.id}`).setAttribute("y", this.Ycord);
 	}
 }
