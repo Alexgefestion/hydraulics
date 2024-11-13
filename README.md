@@ -14,8 +14,8 @@
 <li>1 - эллипс, с центром в координатах cx=x, cy=y; радиусы дуг rx=cord1, ry=cord2;</li>
 
 
-<svg width="100" height="100" mlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xml:space="preserve">>
-	<ellipse cx="50" cy="50" rx="48" ry="48"></ellipse>
-	<line x1="50" y1="2" x2="35" y2="25"></line>
-	<line x1="50" y1="2" x2="65" y2="25"></line>
+<svg width="100" height="100">
+	<ellipse cx="50" cy="50" rx="48" ry="48" stroke="black" fill="#adf"></ellipse>
+	<line x1="50" y1="2" x2="35" y2="25" stroke="black"></line>
+	<line x1="50" y1="2" x2="65" y2="25" stroke="black"></line>
 </svg>
