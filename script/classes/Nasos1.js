@@ -1,4 +1,5 @@
 class Nasos1 extends CommonBlock{
+	prototype = "Nasos1"
 	name = "Насос"
 	// getIcon(){
 	// 	return `

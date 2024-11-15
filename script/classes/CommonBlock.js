@@ -1,6 +1,6 @@
 class CommonBlock{
 	constructor(option){
-		option = Object.assign({}, this.defaultOptions, option);
+		option = Object.assign({}, CommonBlock.defaultOptions, option);
 		this.id = option.id;
 		this.name = option.name;
 		this.Xcord = option.Xcord;
@@ -9,7 +9,7 @@ class CommonBlock{
 		this.pressure = option.pressure;
 		this.temperature = option.temperature
 	}
-	defaultOptions = {
+	static defaultOptions = {
 		id: 0,
 		name: 'common',
 		Xcord: 0,
@@ -27,7 +27,7 @@ class CommonBlock{
 	//graphic 
 
 	
-	miniIcon = "";
+	static miniIcon = "";
 	// icon = [
 	// 	[1,0,0,48,48],
 	// 	[0,0,-48,15,-25],

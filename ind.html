@@ -196,6 +196,7 @@ body {
 					<input type="number">
 					<p>Цвет</p>
 					<input type="color" oninput="changeLiquidOption(this.value)">
+					<input type="file" id="inputFile" multiple />
 				</div>
 			</div>
 		</div>
@@ -534,4 +535,27 @@ body {
 		return newY;
 	}
 	init();
+
+	inputFile.addEventListener('change', function(event) {
+        const file = event.target.files[0]; // Получаем первый загруженный файл
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const content = JSON.parse(e.target.result);
+                for(let i = 0; i < content.length; i++){
+                	createBlock(content[0]['prototype']);
+                	for (key in content[0]) {
+                		Block[0][key] =  content[0][key]
+                	}
+                }           
+            };
+
+            reader.onerror = function(e) {
+                console.error("Ошибка при чтении файла", e);
+            };
+
+            reader.readAsText(file); // Читаем файл как текст
+        }
+    });
 </script>
