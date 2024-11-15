@@ -34,7 +34,8 @@ class CommonBlock{
 	// 	[0,0,-48,-15,-25]
 	// ];
 	icon = [
-		[0,0,-48,2,-26,0,-48,22,-48,48,2,0,26,22,48,48,48]
+		[0,0,-48,2,-26,0,-48,22,-48,48,2,0,26,22,48,48,48,2,26,0,48,-23,48,-48,2,0,-26,-23,-48,-48,-48],
+		[0,0,-48,1,-15,25,1,30,0,1,-15,-25]
 	];
 	scale = 1;
 
@@ -60,8 +61,6 @@ class CommonBlock{
 		return x * cos[quadrant] + y * sin[quadrant];
 	}
 	iconRotatePrcessor(iconObjet, quadrant){
-		let cos = [0,1,0,-1];
-		let sin = [1,0,-1,0];
 		let newIcon = [];
 		for(let i = 0; i < iconObjet.length; i++){
 			// newIcon[i] = [];
@@ -117,22 +116,22 @@ class CommonBlock{
 			let j = 0;
 			newIcon[i] = [];
 			newIcon[i][j] = 0
-			newIcon[i][j+1] = iconObjet[i][j+1]+this.Xcord;
-			newIcon[i][j+2] = iconObjet[i][j+2]+this.Ycord;
+			newIcon[i][j+1] = iconObjet[i][j+1]*this.scale+this.Xcord;
+			newIcon[i][j+2] = iconObjet[i][j+2]*this.scale+this.Ycord;
 			j = j+3;
 			while (j < iconObjet[i].length) {
 				newIcon[i][j] = iconObjet[i][j];
 				if(iconObjet[i][j] == 1){
-					newIcon[i][j+1] = iconObjet[i][j+1];
-					newIcon[i][j+2] = iconObjet[i][j+2];
+					newIcon[i][j+1] = iconObjet[i][j+1]*this.scale;
+					newIcon[i][j+2] = iconObjet[i][j+2]*this.scale;
 					j = j+3;
 				}else{
-					newIcon[i][j+1] = iconObjet[i][j+1];
-					newIcon[i][j+2] = iconObjet[i][j+2];
-					newIcon[i][j+3] = iconObjet[i][j+3];
-					newIcon[i][j+4] = iconObjet[i][j+4];
-					newIcon[i][j+5] = iconObjet[i][j+5];
-					newIcon[i][j+6] = iconObjet[i][j+6];
+					newIcon[i][j+1] = iconObjet[i][j+1]*this.scale;
+					newIcon[i][j+2] = iconObjet[i][j+2]*this.scale;
+					newIcon[i][j+3] = iconObjet[i][j+3]*this.scale;
+					newIcon[i][j+4] = iconObjet[i][j+4]*this.scale;
+					newIcon[i][j+5] = iconObjet[i][j+5]*this.scale;
+					newIcon[i][j+6] = iconObjet[i][j+6]*this.scale;
 					j = j+7;
 				}
 			}
@@ -160,13 +159,12 @@ class CommonBlock{
 					j = j+7;
 				}
 			}
-			newIcon += `<path d="${d}">`
+			newIcon += `<path id="block${this.id}" d="${d}"></path>`
 		}
 		newIcon += "</d>"
 		return newIcon;
 	}
 	getIcon(){
-		console.log(this.iconMarginPrcessor(this.iconRotatePrcessor(this.icon, 0)))
 		return this.iconProcessor(this.iconMarginPrcessor(this.iconRotatePrcessor(this.icon, 0)));
 	}
 
@@ -200,6 +198,7 @@ class CommonBlock{
 	}
 
 	move(newX,newY){
+		if(this.Xcord == newX && this.Ycord == newY){return}
 		this.Xcord = newX;
 		workSpace.getElementById(`block${this.id}`).remove();
 		this.Ycord = newY;

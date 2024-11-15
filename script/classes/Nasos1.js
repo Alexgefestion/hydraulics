@@ -31,11 +31,11 @@ class Nasos1 extends CommonBlock{
 	}
 	]
 	drawNodes(){
-		// let thisElem = workSpace.getElementById(`block${this.id}`);
-		// for(let i = 0; i < this.nodes.length; i++){
-		// 	thisElem.innerHTML+= `
-		// 	<circle class="node" id="node${this.id}_${i}" onmousedown="pipe([${this.id},${i}])" cx="${this.nodes[i]['cx']+this.Xcord}" cy="${this.nodes[i]['cy']+this.Ycord}" r="5" fill="black" stroke-width="1" stroke="#dadaff"/>
-		// 	`
-		// }
+		let thisElem = workSpace.getElementById(`block${this.id}`);
+		for(let i = 0; i < this.nodes.length; i++){
+			thisElem.innerHTML+= `
+			<circle class="node" id="node${this.id}_${i}" onmousedown="pipe([${this.id},${i}])" cx="${this.nodes[i]['cx']+this.Xcord}" cy="${this.nodes[i]['cy']+this.Ycord}" r="5" fill="black" stroke-width="1" stroke="#dadaff"/>
+			`
+		}
 	}
 }
