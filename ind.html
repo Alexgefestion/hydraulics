@@ -188,15 +188,26 @@ body {
 				<div id="addBlock" class="addBlock">
 				</div>
 				<div id="liquidOption" class="liquidOption">
-					<p>Название</p>
-					<input type="text">
-					<p>Вязкоть</p>
-					<input type="number">
-					<p>Плотность</p>
-					<input type="number">
-					<p>Цвет</p>
-					<input type="color" oninput="changeLiquidOption(this.value)">
-					<input type="file" id="inputFile" multiple />
+					<div>
+						<p>Название</p>
+						<input type="text">
+					</div>
+					<div>
+						<p>Вязкоть</p>
+						<input type="number">
+					</div>
+					<div>
+						<p>Плотность</p>
+						<input type="number">
+					</div>
+					<div>
+						<p>Цвет</p>
+						<input type="color" oninput="changeLiquidOption(this.value)">
+					</div>
+					<div>
+						<input type="file" id="inputFile" multiple />
+					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -472,7 +483,7 @@ body {
 		currTarget = newid;
 		if(newid != -1){
 			currTargetOut.innerHTML = Block[newid].name;
-			document.getElementById(`block${currTarget}`).style.stroke = "#fff";
+			document.getElementById(`block${currTarget}`).style.stroke = "white";
 		}else{
 			currTargetOut.innerHTML = "Рабочее поле";
 		}	
