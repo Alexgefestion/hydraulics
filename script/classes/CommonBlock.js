@@ -5,7 +5,7 @@ class CommonBlock{
 		this.name = option.name;
 		this.Xcord = option.Xcord;
 		this.Ycord = option.Ycord;
-		this.liquid = option.liquid;
+		this.liquidId = option.liquid;
 		this.pressure = option.pressure;
 		this.temperature = option.temperature
 	}
@@ -14,26 +14,14 @@ class CommonBlock{
 		name: 'common',
 		Xcord: 0,
 		Ycord: 0,
-		liquid: {
-			id: 0,
-			name: 'Вода',
-			viscosity: 8.90e-4,
-			fill: '#adf',
-			density: 997
-		},
+		liquid: 0,
 		pressure: 1,
 		temperature: 20		
 	}
-	//graphic 
-
-	
+	//graphic 	
 	static miniIcon = "";
-	// icon = [
-	// 	[1,0,0,48,48],
-	// 	[0,0,-48,15,-25],
-	// 	[0,0,-48,-15,-25]
-	// ];
-	icon = [
+
+	static icon = [
 		[0,0,-48,2,-26,0,-48,22,-48,48,2,0,26,22,48,48,48,2,26,0,48,-23,48,-48,2,0,-26,-23,-48,-48,-48],
 		[0,0,-48,1,-15,25,1,30,0,1,-15,-25]
 	];
@@ -63,16 +51,6 @@ class CommonBlock{
 	iconRotatePrcessor(iconObjet, quadrant){
 		let newIcon = [];
 		for(let i = 0; i < iconObjet.length; i++){
-			// newIcon[i] = [];
-			// newIcon[i][0] = iconObjet[i][0];
-			// newIcon[i][1] = this.rotateCordX(iconObjet[i][1], iconObjet[i][2], quadrant);
-			// newIcon[i][2] = this.rotateCordY(iconObjet[i][1], iconObjet[i][2], quadrant);
-			// newIcon[i][3] = this.rotateCordX(iconObjet[i][3], iconObjet[i][4], quadrant);
-			// newIcon[i][4] = this.rotateCordY(iconObjet[i][3], iconObjet[i][4], quadrant);
-			// if(iconObjet[i][0] == 1){
-			// 	newIcon[i][3] = Math.abs(newIcon[i][3]);
-			// 	newIcon[i][4] = Math.abs(newIcon[i][4]);			
-			// }
 			let j = 0;
 			newIcon[i] = [];
 			newIcon[i][j] = 0
@@ -102,17 +80,6 @@ class CommonBlock{
 	iconMarginPrcessor(iconObjet){
 		let newIcon = [];
 		for(let i = 0; i < iconObjet.length; i++){
-			// newIcon[i] = [];
-			// newIcon[i][0] = iconObjet[i][0];
-			// newIcon[i][1] = iconObjet[i][1]*this.scale+this.Xcord;
-			// newIcon[i][2] = iconObjet[i][2]*this.scale+this.Ycord;
-			// if(iconObjet[i][0] == 0){
-			// 	newIcon[i][3] = iconObjet[i][3]*this.scale+this.Xcord;
-			// 	newIcon[i][4] = iconObjet[i][4]*this.scale+this.Ycord;			
-			// }else{
-			// 	newIcon[i][3] = iconObjet[i][3]*this.scale;
-			// 	newIcon[i][4] = iconObjet[i][4]*this.scale;
-			// }
 			let j = 0;
 			newIcon[i] = [];
 			newIcon[i][j] = 0
@@ -139,14 +106,9 @@ class CommonBlock{
 		return newIcon;
 	}
 	iconProcessor(iconObjet){
-		let newIcon = `<g id="block${this.id}" fill="${this.liquid.fill}" stroke="black" stroke-width="2px">`;
+		let newIcon = `<g id="block${this.id}" fill="${Liquid[this.liquidId].fill}" stroke="black" stroke-width="2px">`;
 		let d = "";
 		for(let i = 0; i < iconObjet.length; i++){
-			// if(iconObjet[i][0] == 0){
-			// 	newIcon += `<line x1="${iconObjet[i][1]}" y1="${iconObjet[i][2]}" x2="${iconObjet[i][3]}" y2="${iconObjet[i][4]}" />`		
-			// }else{
-			// 	newIcon += `<ellipse id="block${this.id}" cx="${iconObjet[i][1]}" cy="${iconObjet[i][2]}" rx="${iconObjet[i][3]}" ry="${iconObjet[i][4]}" />`;
-			// }
 			let j = 0;
 			d = `M${iconObjet[i][j+1]},${ iconObjet[i][j+2]}`
 			j = j+3;
@@ -174,7 +136,7 @@ class CommonBlock{
 			["Название", this.name, "text"],
 			["Давление", this.pressure, "number"],
 			["Температура", this.temperature, "number"],
-			["Жидкость", this.liquid.id, "number"]
+			["Жидкость", this.liquidId, "number"]
 		]
 		return option;
 	}

@@ -1,13 +1,6 @@
 class Nasos1 extends CommonBlock{
 	prototype = "Nasos1"
 	name = "Насос"
-	// getIcon(){
-	// 	return `
-	// <svg id="block${this.id}" width="${this.width}" x="${this.Xcord}" y="${this.Ycord}" fill="${this.liquid.fill}"  stroke-width="2" stroke="black" width="100" height="100" viewBox="0 0 100 100">
-	// 	<circle id="block${this.id}" cx="50" cy="50" r="48"/>
-	// 	<path fill="#000" d="M50,2 l15,20 l-30,0 l15,-20"/>
-	// </svg> `
-	// }
 	static miniIcon = 
 	`
 	<svg id="Nasos1" onClick="createBlock('Nasos1')" viewBox="0 0 100 100">
@@ -15,20 +8,23 @@ class Nasos1 extends CommonBlock{
 		<path d="M50,2 l15,20 l-30,0 l-15,20 " fill="#dadaff"/>
 	</svg>
 	`
+	static icon = [
+		[0,0,-48,2,-26,0,-48,22,-48,48,2,0,26,22,48,48,48,2,26,0,48,-23,48,-48,2,0,-26,-23,-48,-48,-48],
+		[0,0,-48,1,-15,25,1,30,0,1,-15,-25]
+	];
+	getIcon(){
+		return this.iconProcessor(this.iconMarginPrcessor(this.iconRotatePrcessor(Nasos1.icon, 0)));
+	}
 	nodes = [
 	{
 		cx:0,
 		cy:-48,
 		connected: -1,
-		diametr: 50,
-		roughness: 0.1
 	},
 	{
 		cx:0,
 		cy:48,
 		connected: -1,
-		diametr: 50,
-		roughness: 0.1
 	}
 	]
 	drawNodes(){

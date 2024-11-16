@@ -227,7 +227,7 @@ body {
 	let grid = 10;
 
 	let currLiquid = 0;	
-	let currTarget = 0;
+	let currTarget = -1;
 
 	let flagMode = 0
 //перемнные режимов
@@ -238,7 +238,7 @@ body {
 	let prevPipeCord = [-1,-1];
 	let prevNode = [-1,0];
 
-	pipes=[
+	Pipes=[
 	{
 	Xcord: 50,
 	Ycord: 98,
@@ -292,7 +292,7 @@ body {
 			id: index,
 			Xcord: getXcoords(currViewX+(viewPortWidth/2)),
 			Ycord: getYcoords(currViewY+(viewPortHeight/2)),
-			liquid: Liquid[currLiquid]
+			liquidId: currLiquid
 		});
 		workSpace.innerHTML += Block[index].getIcon();
 		Block[index].drawNodes();
@@ -312,25 +312,7 @@ body {
 			Block[prevNode[0]].nodes[node[1]]['connected'] = node;
 			Block[node[0]].nodes[node[1]]['connected'] = prevNode;
 		}
-		
-		// let currPipe = pipes.length;
-		// endNode = startNode;
-		// startNode = node;
-		// endCords = startCords;
-		// startCords = [cords[0]+Block[startNode[0]].Xcord,cords[1]+Block[startNode[0]].Ycord];
-		// if(endNode[0] != -1){
-		// 	pipes[currPipe]=
-		// 		{	
-		// 			startNode: startNode,
-		// 			endNode: endNode,
-		// 			startCords: startCords,
-		// 			endCords: endCords,
-		// 			connect: [startNode,endNode]
-		// 		}
-		// 	console.log(pipes[currPipe]["startCords"])
-		// 	drawPipe(pipes[currPipe],Block[startNode[0]].liquid.fill);
-		// 	startNode[0] = -1;
-		// }	
+	
 	}
   	function drawPipe(pipeData, fill){
   		workSpace.innerHTML += `
@@ -484,11 +466,13 @@ body {
 		}
 	}
 	function setCurrTarget(newid){
-		// document.getElementById(`block${currTarget}`).style.stroke = "black";
+		if(currTarget != -1){
+			document.getElementById(`block${currTarget}`).style.stroke = "black";
+		}
 		currTarget = newid;
-		if (newid != -1){
+		if(newid != -1){
 			currTargetOut.innerHTML = Block[newid].name;
-			// document.getElementById(`block${currTarget}`).style.stroke = "#fff";
+			document.getElementById(`block${currTarget}`).style.stroke = "#fff";
 		}else{
 			currTargetOut.innerHTML = "Рабочее поле";
 		}	
@@ -543,12 +527,31 @@ body {
 
             reader.onload = function(e) {
                 const content = JSON.parse(e.target.result);
-                for(let i = 0; i < content.length; i++){
-                	createBlock(content[0]['prototype']);
-                	for (key in content[0]) {
-                		Block[0][key] =  content[0][key]
+
+                for(let i = 0; i < content[0].length; i++){
+                	Liquid[i] = new CommonLiquid();
+                	for (key in content[0][i]) {
+                		Liquid[i][key] =  content[0][i][key]
                 	}
-                }           
+                } 
+
+
+                for(let i = 0; i < content[1].length; i++){
+                	Block[i] = new blockClasses[content[1][i]['prototype']];
+                	for (key in content[1][i]) {
+                		Block[i][key] =  content[1][i][key]
+                	}
+                	workSpace.innerHTML += Block[i].getIcon();
+                }
+
+
+                for(let i = 0; i < content[2].length; i++){
+                	Pipes[i] = {};
+                	for (key in content[2][i]) {
+                		Pipes[i][key] =  content[2][i][key]
+                	}
+                }      
+
             };
 
             reader.onerror = function(e) {
@@ -558,4 +561,11 @@ body {
             reader.readAsText(file); // Читаем файл как текст
         }
     });
+    function JSONget(){
+    	let data = '[';
+    	data += JSON.stringify(Liquid) + ',';
+    	data += JSON.stringify(Block) + ',';
+    	data += JSON.stringify(Pipes) + ']';
+    	return data;
+    }
 </script>
