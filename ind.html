@@ -102,23 +102,28 @@ body {
 				display: flex;
 				flex-wrap: wrap;
 			}
-				.blockOption > input{
-					background-color: #1c2e40;
-					color: #dadada;
-					background-clip: padding-box;
-					border: 1px solid #bdbdbd;
-					border-radius: 0.25rem;
-					line-height: 1.5;
+				.blockOption > div {
+					flex-basis: 100%;
+
 				}
+					.blockOption > div > input{
+						width: 100%;
+						background-color: #1c2e40;
+						color: #dadada;
+						background-clip: padding-box;
+						border: 1px solid #bdbdbd;
+						border-radius: 0.25rem;
+						line-height: 1.5;
+					}
 			.addBlock {
 				transition-duration: 0.2s;
 				display: none;
 				flex-wrap: wrap;
 			}
-			.addBlock > div {
-				flex-basis: 33.33%;
+				.addBlock > div {
+					flex-basis: 33.33%;
 
-			}
+				}
 
 			.liquidOption {
 				display: none;
@@ -186,7 +191,7 @@ body {
 						<rect class="cls-1" x="38.8" y="11" width="22.3" height="78.1" transform="translate(-20.7 50) rotate(-45)"/>
 					</svg>
 				</div>
-				<div class="tool">
+				<div class="tool" >
 					<svg onclick="JSONget()" width="10" height="10" viewBox="0 0 100 100">
 						<polygon class="cls-1" points="50 77.3 30 50 43 50 40 15 60 15 57 50 70 50 50 77.3"/>
 						<path class="cls-1" d="M15,68.8v9.1c0,6,5.9,10.9,13.1,10.9h43.8c7.2,0,13.1-4.9,13.1-10.9v-9.1"/>
