@@ -19,12 +19,12 @@ class Nasos1 extends CommonBlock{
 	{
 		cx:0,
 		cy:-48,
-		connected: -1,
+		pipe: -1,
 	},
 	{
 		cx:0,
 		cy:48,
-		connected: -1,
+		pipe: -1,
 	}
 	]
 	drawNodes(){
